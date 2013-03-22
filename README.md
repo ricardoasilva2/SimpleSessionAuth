@@ -40,7 +40,7 @@ if ($user->authenticate($login, $senha)){
         
         // Seta o tempo máximo de sessão
         // Nota: se não definido, como no exemplo anterior, o padrão é 4 horas.
-        $session->setExpire(time() + 6 * 60 * 60); // 6 horas
+        $session->setExpire(6 * 60 * 60); // 6 horas
         
         // Seta o tempo máximo de ociosidade
         // Nota: se não definido, como no exemplo anterior, o padrão é 30 minutos.
