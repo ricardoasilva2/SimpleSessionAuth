@@ -31,4 +31,20 @@ if ($user->authenticate($login, $senha)){
 
 ```
 Login de usuário personalizado.
+```php 
+if ($user->authenticate($login, $senha)){
+        $session = new SimpleSessionAuth();
+        
+        // Realiza o login
+        $session->logIn();
+        
+        // Seta o tempo máximo de sessão
+        // Nota: se não definido, como no exemplo anterior, o padrão é 4 horas.
+        $session->setExpire(time() + 6 * 60 * 60); // 6 horas
+        
+        // Setanto valores quaisquer na sessão
+        $session->set('user_id', $user->getId());
+        $session->set('user_name', $user->getName());
+}
 
+```
