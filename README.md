@@ -8,6 +8,7 @@ Uma forma simples de lidar com sessões no PHP, com o **SimpleSessionAuth** voc�
 * Gerenciamento de tempo de sessão;
 * Gerenciamento de tempo de ociosidade;
 * Validação de regras de usuários;
+* Lembra a URL ao perder a sessão, para redireciona-lo de volta ao logar-se novamente
 * Tratamento de erros/mensagens amigável.
  
 ## Usage / Uso
@@ -28,7 +29,6 @@ if ($user->authenticate($login, $senha)){
         $session->set('user_id', $user->getId());
         $session->set('user_name', $user->getName());
 }
-
 ```
 Login de usuário personalizado.
 ```php 
@@ -50,7 +50,6 @@ if ($user->authenticate($login, $senha)){
         $session->set('user_id', $user->getId());
         $session->set('user_name', $user->getName());
 }
-
 ```
 ### isAuthenticated(), get()
 Verificando se usuário está autenticado da forma mais simples
@@ -62,8 +61,7 @@ if (!$session->isAuthenticated()){
        print $session->get('user_id');
        print $session->get('user_name');
        exit;
-}            
-
+}
 ```
 ### isAuthenticated(), setRules(), validateRules()
 Verificando se usuário está autenticado validando algumas regras
@@ -105,7 +103,6 @@ $session->validateRules($teste_rules1, false); // return true
 $session->validateRules($teste_rules2, false); // return true
 $session->validateRules($teste_rules3, false); // return false
 $session->validateRules($teste_rules4, false); // return true
-
 ```
 ### logout()
 Logout de usuário
@@ -113,8 +110,7 @@ Atenção, este método limpa todas a variáveis gravadas em sessão
 
 ```php 
 $session = new SimpleSessionAuth();
-$session->logout();         
-
+$session->logout();
 ```
 
 ### Mensagens
@@ -134,7 +130,6 @@ if ($session->getArrayMessages()){ // se não hover menssagens, retorna false
               print $codeMessage;
        }
 }
-
 ```
 
 #### getArrayTextMessages(), clearMessages()
@@ -148,7 +143,6 @@ if ($arrayMessages = $session->getArrayTextMessages()){ // se não hover menssag
        }
        $session->clearMessages(); // Limpando as mensagens da sessão
 }
-
 ```
 
 #### getTextMessages(), clearMessages()
@@ -161,7 +155,6 @@ if ($messagesTxt = $session->getTextMessages()){ // se não hover menssagens, re
        print $messagesTxt;
        $session->clearMessages(); // Limpando as mensagens da sessão
 }
-
 ```
 Pegando os textos amigáveis das mensagens aninhadas em String (HTML) de forma personalizada.
 Neste exemplo, cada mensagens retorna dentro de uma tag <div /> com o atributo "class" setado como "warning" e "title" como "Leia com atenção".
@@ -172,7 +165,6 @@ if ($messagesTxt = $session->getTextMessages('div', Array('class' => 'warning', 
        print $messagesTxt;
        $session->clearMessages(); // Limpando as mensagens da sessão
 }
-
 ```
 
 #### setJsonMessagesUrl()
@@ -189,7 +181,6 @@ if ($messagesTxt = $session->getTextMessages()){ // se não hover menssagens, re
        print $messagesTxt;
        $session->clearMessages(); // Limpando as mensagens da sessão
 }
-
 ```
 
 ### Métodos públicos que podem ser úteis
@@ -204,8 +195,7 @@ if (!$session->isLoggedIn()){
        print $session->get('user_id');
        print $session->get('user_name');
        exit;
-}            
-
+}
 ```
 
 #### destroy()
@@ -215,7 +205,6 @@ Destroi uma variável de sessão ou a sessão inteira.
 $session = new SimpleSessionAuth();
 $session->destroy('user_name'); Destroi somente a variável user_id
 $session->destroy(); Destroi toda a sessão.
-
 ```
 
 #### clear()
@@ -225,7 +214,6 @@ Nota: Mesmo que Logout, porém, não seta nenhuma mensagem de sucesso de Logout.
 ```php 
 $session = new SimpleSessionAuth();
 $session->clear();
-
 ```
 
 #### updateIdle()
@@ -281,3 +269,12 @@ $session->logIn();
 $pathToRedirect = $session->getUrlRemember('index/');
 header("location: {$pathToRedirect}");
 ```
+
+## TODO
+* Realizar mais testes;
+* Revisar e melhorar este arquivo README;
+* Idéias novas são bem vindas;
+* Críticas também.
+
+## Autor
+Ricardo Amorim <ricardoasilva2@gmail.com>
