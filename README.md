@@ -76,6 +76,7 @@ $session->logIn();
 // Seta regras do usuário
 $session->setRules(Array('permission' => 'admin', 'comments' => 'edit'));
 
+// ############################################
 
 // Outra página
 $session = new SimpleSessionAuth();
@@ -225,4 +226,58 @@ Nota: Mesmo que Logout, porém, não seta nenhuma mensagem de sucesso de Logout.
 $session = new SimpleSessionAuth();
 $session->clear();
 
+```
+
+#### updateIdle()
+Atualiza a hora para renovar o tempo de ociosidade
+Nota: Sempre que o método isAuthenticated() é executado, o updateIdle() também é automaticamente
+
+```php 
+$session = new SimpleSessionAuth();
+$session->updateIdle();
+```
+
+#### getSessionValidThru()
+Retorna quanto tempo ainda tem para o tempo de ociosidade expitar
+
+```php 
+$session = new SimpleSessionAuth();
+$session->getSessionValidThru();
+```
+
+#### setUrlRemember()
+Seta uma URL para ser lembrada posteriormente
+Muito útil para quando o usuário perde a sessão, e ao logar-se novamente, ele pode ser redirecionado para a url lembrada
+Nota: Sempre que o método isAuthenticated() é executado, o setUrlRemember() também é automaticamente
+
+```php 
+$session = new SimpleSessionAuth();
+$session->setUrlRemember(); // seta a url atual chamada
+$session->setUrlRemember($url); // seta uma url específica
+```
+
+#### getUrlRemember()
+Pega a URL a ser lembrada
+Muito útil para quando o usuário perde a sessão, e ao logar-se novamente, ele pode ser redirecionado para a url lembrada
+
+```php 
+$session = new SimpleSessionAuth();
+$session->logIn();
+// Pega URL que foi lembrada (na sessão) pelo método isAuthenticated() ou setUrlRemember()
+// Nota: Se não tiver nenhuma url gravada na sessão para lembrar, retornará o parametro passado, no caso, 'index/'
+$pathToRedirect = $session->getUrlRemember('index/');
+header("location: {$pathToRedirect}");
+```
+
+#### clearUrlRemember()
+Limpa a variável de sessão destinada a lembrar uma URL para ser redirecionado.
+Nota: Sempre que o método isAuthenticated() é executado, o clearUrlRemember() também é automaticamente
+
+```php 
+$session = new SimpleSessionAuth();
+$session->logIn();
+// Pega URL que foi lembrada (na sessão) pelo método isAuthenticated() ou setUrlRemember()
+// Nota: Se não tiver nenhuma url gravada na sessão para lembrar, retornará o parametro passado, no caso, 'index/'
+$pathToRedirect = $session->getUrlRemember('index/');
+header("location: {$pathToRedirect}");
 ```
