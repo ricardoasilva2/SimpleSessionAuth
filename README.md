@@ -19,6 +19,7 @@ use SimpleSessionAuth;
 
 ### logIn(), set(), setExpire(), setIdle()
 Login de usuário simples.
+Nota: Em logIn(), Se passado false no primeiro parametro, não é gerado mensagens erros e avisos
 
 ```php 
 if ($user->authenticate($login, $senha)){
@@ -104,7 +105,7 @@ $session->validateRules($teste_rules2, false); // return true
 $session->validateRules($teste_rules3, false); // return false
 $session->validateRules($teste_rules4, false); // return true
 ```
-### logout()
+### logOut()
 Logout de usuário
 Atenção, este método limpa todas a variáveis gravadas em sessão
 
@@ -188,32 +189,37 @@ Metodos que podem ser utilizados para usos mais avançados e/ou personalizados
 
 #### isLoggedIn()
 Verifica se usuário está logado, independente se o tempo de sessão e ociosidade expirou ou não.
+Nota: Se passado false no primeiro parametro, não é gerado mensagens erros e avisos
 
 ```php 
 $session = new SimpleSessionAuth();
-if (!$session->isLoggedIn()){
+if ($session->isLoggedIn()){
        print $session->get('user_id');
        print $session->get('user_name');
        exit;
 }
 ```
 
-#### destroy()
-Destroi uma variável de sessão ou a sessão inteira.
+#### isExpired()
+Verifica se a sessão expirou, independente se usuário está logado e/ou o tempo ociosidade expirou ou não.
+Nota: Se passado false no primeiro parametro, não é gerado mensagens erros e avisos
 
 ```php 
 $session = new SimpleSessionAuth();
-$session->destroy('user_name'); Destroi somente a variável user_id
-$session->destroy(); Destroi toda a sessão.
+if ($session->isExpired()){
+       $session->logOut();
+}
 ```
 
-#### clear()
-Limpa a sessão.
-Nota: Mesmo que Logout, porém, não seta nenhuma mensagem de sucesso de Logout.
+#### isIdle()
+Verifica se a o tempo de ociosidade expirou, independente se usuário está logado e/ou o tempo de sessão expirou ou não.
+Nota: Se passado false no primeiro parametro, não é gerado mensagens erros e avisos
 
 ```php 
 $session = new SimpleSessionAuth();
-$session->clear();
+if ($session->isIdle()){
+       $session->logOut();
+}
 ```
 
 #### updateIdle()
@@ -268,6 +274,24 @@ $session->logIn();
 // Nota: Se não tiver nenhuma url gravada na sessão para lembrar, retornará o parametro passado, no caso, 'index/'
 $pathToRedirect = $session->getUrlRemember('index/');
 header("location: {$pathToRedirect}");
+```
+
+#### destroy()
+Destroi uma variável de sessão ou a sessão inteira.
+
+```php 
+$session = new SimpleSessionAuth();
+$session->destroy('user_name'); Destroi somente a variável user_id
+$session->destroy(); Destroi toda a sessão.
+```
+
+#### clear()
+Limpa a sessão.
+Nota: Mesmo que Logout, porém, não seta nenhuma mensagem de sucesso de Logout.
+
+```php 
+$session = new SimpleSessionAuth();
+$session->clear();
 ```
 
 ## TODO
