@@ -66,41 +66,48 @@ class SimpleSessionAuth {
     
     /**
     * Realiza login, seta tempo pra expirar da sessão e seta tempo máximo de ociosidade
+    * @param Boolean $setMessage Se false não registra mensagens
     * @return Nothing
     */
-    public function logIn(){
+    public function logIn($setMessage=true){
         $this->set('__SimpleSessionAuth_Logged', true);
-        $this->setExpire(time() + 4 * 60 * 60); // expira em 4 horas
+        $this->setExpire(4 * 60 * 60); // expira em 4 horas
         $this->setIdle(30 * 60); // ocioso em 30 min.
-        $this->setMessage('SESSION_LOGIN_SUCCESS');
+        if ($setMessage === true)
+            $this->setMessage('SESSION_LOGIN_SUCCESS');
     }
     
     /**
     * Limpa a sessão
+    * @param Boolean $setMessage Se false não registra mensagens
     * @return Nothing
     */
-    public function logOut(){
+    public function logOut($setMessage=true){
         $this->clear();
-        $this->setMessage('SESSION_LOGOUT_SUCCESS');
+        if ($setMessage === true)
+            $this->setMessage('SESSION_LOGOUT_SUCCESS');
     }
     
     /**
     * Verifica se está logado
+    * @param Boolean $setMessage Se false não registra mensagens
     * @see isAuthenticated()
-    * @return Booleam
+    * @return Boolean
     */
-    public function isLoggedIn(){
+    public function isLoggedIn($setMessage=true){
         if ($this->get('__SimpleSessionAuth_Logged') === true)
             return true;
         
-        $this->setMessage('SESSION_NOT_LOGGEDIN');
+        if ($setMessage === true)
+            $this->setMessage('SESSION_NOT_LOGGEDIN');
+        
         return false;
     }
     
     /**
     * Verifica se está autenticado
     * @param Array $rules Regras a serem testadas
-    * @return Booleam
+    * @return Boolean
     */
     public function isAuthenticated($rules=false){
         if (!$this->isLoggedIn() OR $this->isExpired() OR $this->isIdle() OR ($rules !== false AND $this->validateRules($rules))){
@@ -157,7 +164,7 @@ class SimpleSessionAuth {
     * @param Array $rules Regras a serem testadas
     * @param Array $validateAll Todas as regras passadas devem ser válidas
     * @see isAuthenticated()
-    * @return Booleam
+    * @return Boolean
     */
     public function validateRules($rules, $validateAll=true){
         if (!is_array($rules)){
@@ -185,7 +192,7 @@ class SimpleSessionAuth {
     /**
     * Seta tempo de duração da sessão
     * @param Integer $time Tempo em segundos
-    * @param Booleam $add Setar true se desejar que $time seja adicionado ao tempo que já existe
+    * @param Boolean $add Setar true se desejar que $time seja adicionado ao tempo que já existe
     * @see logIn()
     * @return Nothing
     */
@@ -197,7 +204,7 @@ class SimpleSessionAuth {
     /**
     * Seta tempo de duração máxima de ociosidade da sessão
     * @param Integer $time Tempo em segundos
-    * @param Booleam $add Setar true se desejar que $time seja adicionado ao tempo que já existe
+    * @param Boolean $add Setar true se desejar que $time seja adicionado ao tempo que já existe
     * @see logIn()
     * @return Nothing
     */
@@ -212,7 +219,7 @@ class SimpleSessionAuth {
     * @return Nothing
     */
     public function updateIdle(){
-        if (isset($_SESSION['__HTTP_Session2_Idle_TS'])) $_SESSION['__HTTP_Session2_Idle_TS'] = time();
+        if (isset($_SESSION['__SimpleSessionAuth_Idle_TS'])) $_SESSION['__SimpleSessionAuth_Idle_TS'] = time();
     }
     
     /**
@@ -228,26 +235,32 @@ class SimpleSessionAuth {
     
     /**
     * Testa se sessão está expirada
+    * @param Boolean $setMessage Se false não registra mensagens
     * @see isAuthenticated()
-    * @return Booleam
+    * @return Boolean
     */
-    public function isExpired(){
+    public function isExpired($setMessage=true){
         if ($_SESSION['__SimpleSessionAuth_Expire'] > 0 && isset($_SESSION['__SimpleSessionAuth_Expire_TS']) &&
-            ($_SESSION['__SimpleSessionAuth_Expire_TS'] + $_SESSION['__SimpleSessionAuth_Expire']) <= time()){         
-            $this->setMessage('SESSION_EXPIRED');
+            ($_SESSION['__SimpleSessionAuth_Expire_TS'] + $_SESSION['__SimpleSessionAuth_Expire']) <= time()){ 
+            if ($setMessage === true)
+                $this->setMessage('SESSION_EXPIRED');
+                
             return true;   
         }else return false;
     }
     
     /**
     * Testa se sessão está ociosa
+    * @param Boolean $setMessage Se false não registra mensagens
     * @see isAuthenticated()
-    * @return Booleam
+    * @return Boolean
     */
-    public function isIdle(){
+    public function isIdle($setMessage=true){
         if ($_SESSION['__SimpleSessionAuth_Idle'] > 0 && isset($_SESSION['__SimpleSessionAuth_Idle_TS']) &&
-            ($_SESSION['__SimpleSessionAuth_Idle_TS'] + $_SESSION['__SimpleSessionAuth_Idle']) <= time()){         
-            $this->setMessage('SESSION_IDLE');
+            ($_SESSION['__SimpleSessionAuth_Idle_TS'] + $_SESSION['__SimpleSessionAuth_Idle']) <= time()){
+            if ($setMessage === true)
+                $this->setMessage('SESSION_IDLE');
+                
             return true;   
         }else return false;
     }
