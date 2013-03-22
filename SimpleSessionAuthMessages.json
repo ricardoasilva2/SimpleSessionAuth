@@ -1,0 +1,10 @@
+{
+    "SESSION_LOGIN_SUCCESS": "Login realizado com sucesso.",
+    "SESSION_LOGOUT_SUCCESS": "Logout realizado com sucesso.",
+    "SESSION_NOT_LOGGEDIN": "Desculpe, você precisa estar logado para acessar esta área.",
+    "SESSION_EXPIRED": "Desculpe, a sua sessão expirou, favor, logar-se novamente.",
+    "SESSION_IDLE": "Desculpe, a sua sessão expirou pois ficou muito tempo sem utilizar o sistema, favor, logar-se novamente.",
+    "SESSION_RULES_NOT_ARRAY": "Desculpe, não foi possível acessar esta página porque as regras não foram atendidas.",
+    "SESSION_RULES_AT_LEAST_ONE_INVALIDE": "Desculpe, não foi possível acessar esta página porque as regras não foram atendidas.",
+    "SESSION_RULES_ALL_INVALIDE": "Desculpe, não foi possível acessar esta página porque as regras não foram atendidas."
+}
