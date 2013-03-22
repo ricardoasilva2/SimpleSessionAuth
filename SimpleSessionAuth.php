@@ -319,14 +319,14 @@ class SimpleSessionAuth {
     * @param Array $wrapTagAttributes Atributos e valores a serem incluídos na tag $wrapTag
     * @return String
     */
-    public function getTextMessages($wrapTag=false, $wrapTagAttributes=Array('class' => 'SimpleSessionAuth_Messages')){
+    public function getTextMessages($wrapTag='p', $wrapTagAttributes=Array('class' => 'SimpleSessionAuth_Messages')){
         $msgs = &$_SESSION['__SimpleSessionAuth_Messages'];
         $msgtext = '';
         if (isset($msgs) and is_array($msgs)){            
             foreach($msgs as $msg){
                 $msg = $this->getJsonMessageText($msg);
                 if (!$wrapTag){
-                    $msgtext = $msg;
+                    $msgtext .= $msg;
                 }else{
                     if (is_array($wrapTagAttributes)){
                         $attrs = "";
