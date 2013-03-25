@@ -79,13 +79,11 @@ class SimpleSessionAuth {
     
     /**
     * Limpa a sessão
-    * @param Boolean $setMessage Se false não registra mensagens
     * @return Nothing
     */
-    public function logOut($setMessage=true){
+    public function logOut(){
         $this->clear();
-        if ($setMessage === true)
-            $this->setMessage('SESSION_LOGOUT_SUCCESS');
+        $this->setMessage('SESSION_LOGOUT_SUCCESS');
     }
     
     /**
@@ -117,7 +115,6 @@ class SimpleSessionAuth {
             $this->setUrlRemember();
             return false;
         }else{
-            $this->clearUrlRemember();
             $this->updateIdle();
             return true;
         }
@@ -272,7 +269,7 @@ class SimpleSessionAuth {
     * @return Nothing
     */
     public function setUrlRemember($url=false){
-        $_SESSION['__SimpleSessionAuth_UrlRemember'] = !$url ? $_SERVER['SCRIPT_NAME'] : $url;
+        $_SESSION['__SimpleSessionAuth_UrlRemember'] = !$url ? $_SERVER['REQUEST_URI'] : $url;
     }
     
     /**
@@ -286,7 +283,6 @@ class SimpleSessionAuth {
     
     /**
     * Limpa a url a ser lembrada
-    * @see isAuthenticated()
     * @return Nothing
     */
     public function clearUrlRemember(){

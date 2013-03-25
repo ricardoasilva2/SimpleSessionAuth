@@ -250,7 +250,7 @@ $session->setUrlRemember(); // seta a url atual chamada
 $session->setUrlRemember($url); // seta uma url específica
 ```
 
-#### getUrlRemember()
+#### getUrlRemember(), clearUrlRemember()
 Pega a URL a ser lembrada
 Muito útil para quando o usuário perde a sessão, e ao logar-se novamente, ele pode ser redirecionado para a url lembrada
 
@@ -260,19 +260,8 @@ $session->logIn();
 // Pega URL que foi lembrada (na sessão) pelo método isAuthenticated() ou setUrlRemember()
 // Nota: Se não tiver nenhuma url gravada na sessão para lembrar, retornará o parametro passado, no caso, 'index/'
 $pathToRedirect = $session->getUrlRemember('index/');
-header("location: {$pathToRedirect}");
-```
-
-#### clearUrlRemember()
-Limpa a variável de sessão destinada a lembrar uma URL para ser redirecionado.
-Nota: Sempre que o método isAuthenticated() é executado, o clearUrlRemember() também é automaticamente
-
-```php 
-$session = new SimpleSessionAuth();
-$session->logIn();
-// Pega URL que foi lembrada (na sessão) pelo método isAuthenticated() ou setUrlRemember()
-// Nota: Se não tiver nenhuma url gravada na sessão para lembrar, retornará o parametro passado, no caso, 'index/'
-$pathToRedirect = $session->getUrlRemember('index/');
+// limpa a variável da sessão
+$session->clearUrlRemember();
 header("location: {$pathToRedirect}");
 ```
 
