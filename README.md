@@ -235,7 +235,12 @@ Retorna quanto tempo ainda tem para o tempo de ociosidade expitar
 
 ```php 
 $session = new SimpleSessionAuth();
-$session->getSessionValidThru();
+
+// data e hora que vai se expirar a sessão de ociosidade
+print date('d/m/Y - H:i:s', $session->getSessionValidThru());
+
+// minutos para expirar a sessão
+print ($session->getSessionValidThru()-time())/(86400/24/60);
 ```
 
 #### setUrlRemember()
@@ -269,8 +274,8 @@ Destroi uma variável de sessão ou a sessão inteira.
 
 ```php 
 $session = new SimpleSessionAuth();
-$session->destroy('user_name'); Destroi somente a variável user_id
-$session->destroy(); Destroi toda a sessão.
+$session->destroy('user_name'); //Destroi somente a variável user_id
+$session->destroy(); //Destroi toda a sessão.
 ```
 
 #### clear()
