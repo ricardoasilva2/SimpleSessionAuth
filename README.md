@@ -57,7 +57,7 @@ Verificando se usuário está autenticado da forma mais simples
 
 ```php 
 $session = new SimpleSessionAuth();
-if (!$session->isAuthenticated()){
+if ($session->isAuthenticated()){
        // Pega as variáveis gravadas na sessão
        print $session->get('user_id');
        print $session->get('user_name');
@@ -124,12 +124,11 @@ Pegando os códigos das mensagens aninhadas em Array
 
 ```php 
 $session = new SimpleSessionAuth();
-if ($session->getArrayMessages()){ // se não hover menssagens, retorna false
-       $arrayMessages = $session->getArrayMessages();
-       $session->clearMessages(); // Limpando as mensagens da sessão
+if ($arrayMessages = $session->getArrayMessages()){ // se não hover menssagens, retorna false
        foreach($arrayMessages as $codeMessage){
               print $codeMessage;
-       }
+       }       
+       $session->clearMessages(); // Limpando as mensagens da sessão
 }
 ```
 
