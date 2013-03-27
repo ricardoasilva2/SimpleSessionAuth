@@ -240,7 +240,7 @@ $session = new SimpleSessionAuth();
 print date('d/m/Y - H:i:s', $session->getSessionValidThru());
 
 // minutos para expirar a sessão
-print ($session->getSessionValidThru()-time())/(86400/24/60);
+print ($session->getSessionValidThru()-time())/60;
 ```
 
 #### setUrlRemember()
